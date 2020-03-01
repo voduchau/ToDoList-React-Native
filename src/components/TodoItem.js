@@ -1,11 +1,30 @@
-import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Button} from 'react-native';
+import React, { useState } from 'react';
+import {View, Text, StyleSheet, TouchableOpacity, Button, CheckBox, ScrollView} from 'react-native';
 
-const TodoItem = ({nameItem, deleteItem}) => {
+const TodoItem = ({nameItem,todos,updateItem, deleteItem, setStatus,navigation}) => {
+  const changeCheck = () => {
+    setStatus(nameItem.id);
+  }
+  const text= nameItem.status? <Text style={styles.Item2}>{nameItem.name}</Text>:<Text style={styles.Item}>{nameItem.name}</Text>
   return (
     <View style={styles.ViewStyle}>
-      <Text style={styles.Item}>{nameItem.name}</Text>
-      <View>
+      
+      <CheckBox 
+      value={nameItem.status}
+      onValueChange = {() =>
+        changeCheck()
+      } />
+      <ScrollView style={styles.viewScroll}>
+        <View>
+          {text}
+        </View>
+      </ScrollView>
+      <View style={styles.Viewbtn}>
+        <Button
+          title="EDIT"
+          color="blue"
+          onPress={() =>navigation.navigate('ScreenUpdate',{item: nameItem,updateItem:updateItem})}
+        />
         <Button
           title="DELETE"
           color="red"
@@ -17,17 +36,30 @@ const TodoItem = ({nameItem, deleteItem}) => {
 };
 
 const styles = StyleSheet.create({
+  viewScroll:{
+    flex:1,
+    overflow: 'scroll',
+  },
   ViewStyle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginHorizontal: '15%',
+    marginHorizontal: '5%',
     borderBottomWidth:2,
     marginBottom:15,
+    height: 100,
+    
   },
   Item: {
-    fontSize: 30,
-    width: '60%',
+    fontSize: 25,  },
+  Viewbtn:{
+    flexDirection:'row',
+    height:150,
+
   },
+  Item2:{
+    fontSize: 25,
+    textDecorationLine: "line-through",
+  }
 });
 
 export default TodoItem;

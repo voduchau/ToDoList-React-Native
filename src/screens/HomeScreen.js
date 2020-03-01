@@ -1,12 +1,16 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import InputComponent from '../components/InputComponent';
+import { ScrollView } from 'react-native-gesture-handler';
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation,title}) => {
   return (
-    <View>
-      <InputComponent />
+    <ScrollView>
+      <View>
+      <InputComponent navigation={navigation} />
     </View>
+    </ScrollView>
+    
   );
 };
 
