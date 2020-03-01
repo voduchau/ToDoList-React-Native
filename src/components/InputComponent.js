@@ -42,7 +42,6 @@ const InputComponent = ({navigation,title}) => {
       return item;
     })));
   }
-  console.log(todos,'this is todosssssssssss');
   const DeleteItem = id => {
     setTodo(
       todos.filter(item => {
@@ -50,8 +49,6 @@ const InputComponent = ({navigation,title}) => {
       }),
     );
   };
-  // console.log(todos,'todooooo');
-
   return (
     <View>
       <TextInput

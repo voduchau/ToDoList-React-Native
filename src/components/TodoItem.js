@@ -46,14 +46,12 @@ const styles = StyleSheet.create({
     marginHorizontal: '5%',
     borderBottomWidth:2,
     marginBottom:15,
-    height: 100,
-    
   },
   Item: {
     fontSize: 25,  },
   Viewbtn:{
+    alignItems:'flex-start',
     flexDirection:'row',
-    height:150,
 
   },
   Item2:{
