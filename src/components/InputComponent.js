@@ -6,11 +6,12 @@ import {
   StyleSheet,
   Button,
   FlatList,
+  CheckBox,
 } from 'react-native';
 import TodoItem from './TodoItem';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const InputComponent = () => {
+const InputComponent = ({navigation,title}) => {
   const [todos, setTodo] = useState([]);
   const [values, setValue] = useState('');
   const [err, setErr] = useState('');
@@ -19,11 +20,29 @@ const InputComponent = () => {
     if (values == '') {
       setErr('please enter something');
     } else {
-      setTodo([...todos, {name: values, id: String(Date.now())}]);
+      setTodo([...todos, {name: values, id: String(Date.now()),status:false}]);
       setValue('');
       setErr('');
     }
   };
+  const updateItem = (id,newValue) =>{
+    setTodo(todos.map((item => {
+      if (item.id == id){
+        item.name=newValue;
+        item.status=false;
+      }
+      return item;
+    })));
+  }
+  const setStatus =(id)=>{
+    setTodo(todos.map((item => {
+      if (item.id == id){
+        item.status=!item.status;
+      }
+      return item;
+    })));
+  }
+  console.log(todos,'this is todosssssssssss');
   const DeleteItem = id => {
     setTodo(
       todos.filter(item => {
@@ -31,6 +50,7 @@ const InputComponent = () => {
       }),
     );
   };
+  // console.log(todos,'todooooo');
 
   return (
     <View>
@@ -42,6 +62,7 @@ const InputComponent = () => {
         }}
         placeholder={'Add some you want to do'}
       />
+      <Text>{err}</Text>
       <View style={styles.ViewBtn}>
         <Button
           onPress={() => {
@@ -55,10 +76,10 @@ const InputComponent = () => {
         data={todos}
         keyExtractor={todo => todo.id}
         renderItem={({item}) => {
-          return <TodoItem nameItem={item} deleteItem={DeleteItem} />;
+          return <TodoItem navigation={navigation} updateItem={updateItem} nameItem={item} setStatus={setStatus} deleteItem={DeleteItem} />;
         }}
       />
-      <Text>{err}</Text>
+      <Text>{title}</Text>
     </View>
   );
 };
